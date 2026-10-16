@@ -1,0 +1,40 @@
+{
+  "state": "../states/beam.pvsm",
+  "data": "../data/beam.vtu",
+  "output": "../output/beam",
+  "amplitude": 0.7,
+  "cycles": 3,
+  "speed": 0.5,
+  "fps": 24,
+  "workers": 1,
+  "threads_per_worker": 0,
+  "width": 1920,
+  "height": 1080,
+  "crf": 14,
+  "preset": "slow",
+  "gif_width": 1920,
+  "gif_fps": 24,
+  "gif_colors": 256,
+  "azimuth": 0.0,
+  "elevation": 0.0,
+  "roll": 0.0,
+  "zoom": 1.0,
+  "state_camera": false,
+  "orbit_degrees": 0.0,
+  "orbit_axis": [
+    0.0,
+    1.0,
+    0.0
+  ],
+  "orbit2_degrees": 0.0,
+  "orbit2_axis": [
+    0.0,
+    0.0,
+    1.0
+  ],
+  "fly_through": false,
+  "fly_through_at": null,
+  "fly_through_duration": null,
+  "pvpython": null,
+  "ffmpeg": "ffmpeg"
+}

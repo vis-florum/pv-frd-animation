@@ -1,0 +1,21 @@
+{
+  "state": "../states/modes.pvsm",
+  "pvd": "../data/modes/series.pvd",
+  "output": "../output/modes",
+  "start_time": 2.0,
+  "end_time": 16.0,
+  "seconds_per_cycle": 2.0,
+  "amplitude": 0.1,
+  "fps": 24,
+  "width": 1920,
+  "height": 1080,
+  "crf": 14,
+  "preset": "slow",
+  "gif_width": 960,
+  "gif_fps": 24,
+  "gif_colors": 256,
+  "workers": 1,
+  "threads_per_worker": 0,
+  "pvpython": null,
+  "ffmpeg": "ffmpeg"
+}

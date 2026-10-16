@@ -1,0 +1,30 @@
+# Runtime
+.venv/
+__pycache__/
+*.py[cod]
+.config/
+.encode-*/
+.render-request.json
+.render-metadata.json
+.DS_Store
+
+# Working inputs and results
+/data/*
+!/data/README.md
+/states/*
+!/states/README.md
+/output/*
+!/output/.gitkeep
+configs/*.local.json
+*.mp4
+*.gif
+*.vtu
+*.pvd
+*.frd
+*.pvsm
+
+# Credentials and editor state
+.env
+.env.*
+.vscode/
+.idea/

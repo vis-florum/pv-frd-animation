@@ -1,0 +1,10 @@
+[project]
+name = "pv-frd-animation"
+version = "0.1.0"
+description = "State-driven ParaView displacement animations: mode cycles, PVD sweeps, camera paths, and parallel MP4/GIF export."
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = []
+
+[tool.uv]
+package = false
