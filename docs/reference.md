@@ -6,7 +6,7 @@ uv run animate.py {beam,modes} [stage] [flags]
 
 Stages: `run` (default, render + encode), `preview`, `render`, `encode`, `doctor`.
 
-Configs: `configs/beam.local.json` and `configs/modes.local.json`, falling back to the corresponding `.example.json`. Other configs require `--config FILE`. `uv run animate.py init` creates local configs without replacing existing files.
+Configs: `examples/beam/config.local.json` and `examples/modes/config.local.json`, falling back to the corresponding `.example.json`. Other configs require `--config FILE`. `uv run animate.py init` creates local configs without replacing existing files.
 
 CLI flags override the selected config. Config paths resolve relative to the config file; CLI paths resolve relative to the working directory. JSON keys use underscores: `seconds_per_cycle`, `orbit2_degrees`, `gif_width`.
 
@@ -15,8 +15,8 @@ CLI flags override the selected config. Config paths resolve relative to the con
 | Flag | Meaning | Default |
 |---|---|---|
 | `--config FILE` | Select a JSON preset | Local config, then example |
-| `--state FILE` | ParaView state | `states/beam.pvsm` or `states/modes.pvsm` |
-| `--output DIR` | Output directory | `output/beam` or `output/modes` |
+| `--state FILE` | ParaView state | `examples/{beam,modes}/states/{beam,modes}.pvsm` |
+| `--output DIR` | Output directory | `examples/{beam,modes}/output` |
 | `--amplitude X` | Positive/negative warp scale | Beam: `0.7`; sweep: `0.1` |
 | `--fps N` | Frames per second | `24` |
 | `--width N`, `--height N` | PNG/MP4 dimensions; even values | `1920`, `1080` |
@@ -39,7 +39,7 @@ Tool discovery supports PATH, `PVPYTHON`, `PARAVIEW_HOME`, and `FFMPEG`, plus co
 
 | Flag | Meaning | Default |
 |---|---|---|
-| `--data FILE` | Single VTU input | `data/beam.vtu` |
+| `--data FILE` | Single VTU input | `examples/beam/data/beam.vtu` |
 | `--cycles N` | Full oscillations | `3` |
 | `--speed X` | Oscillations per second | `0.5` |
 | `--azimuth DEG` | Rotate around the initial camera up direction | `0` |
@@ -66,7 +66,7 @@ The beam workflow builds its surface/outline display and magnitude legend. The i
 Different orbit axes produce a spiral-like path at fixed radius. Rotations apply in sequence around the two world axes. During fly-through, radius changes as the camera crosses an interior mesh point following the displacement. It resumes at the original radius on the far side. The flight window must lie inside the movie and span at least four frame intervals. Fly-through uses perspective projection.
 
 ```sh
-uv run animate.py beam --config configs/cinematic.local.json --workers 4
+uv run animate.py beam --config examples/cinematic/config.local.json --workers 4
 uv run animate.py beam --orbit-degrees 360 --orbit2-degrees 75 --fly-through
 ```
 
@@ -98,7 +98,7 @@ A same-named PVD beside the state is preferred when inferring paths. Paths withi
 
 Start with 2–4 workers. Each worker loads the mesh and owns a graphics context. Workers share the GPU. Unique fixed-camera poses are rendered once across all workers; cached poses never cross a PVD mode boundary.
 
-The controller waits for every worker, assembles the ordered sequence, then encodes. A worker failure or Ctrl-C stops the pool. Logs are in `output/<job>/worker_logs/`. Preview uses one renderer.
+The controller waits for every worker, assembles the ordered sequence, then encodes. A worker failure or Ctrl-C stops the pool. Logs are in `<configured output>/worker_logs/`. Preview uses one renderer.
 
 Automatic CPU thread limits leave serial ParaView defaults unchanged. Parallel workers share available cores, capped at eight threads per worker. A positive `--threads-per-worker` sets VTK, OpenMP, BLAS, and Mesa limits. FFmpeg controls its own encoding threads.
 

@@ -8,16 +8,20 @@ __pycache__/
 .render-metadata.json
 .DS_Store
 
-# Working inputs and results
-/data/*
-!/data/README.md
-/states/*
-!/states/README.md
-/output/*
-!/output/.gitkeep
-configs/*.local.json
+# Examples: publish only portable presets and documentation.
+/examples/**/*
+!/examples/**/
+!/examples/**/config.example.json
+!/examples/**/README.md
+
+# Inputs and results anywhere else in the project.
+/data/
+/states/
+/output/
+*.local.json
 *.mp4
 *.gif
+*.png
 *.vtu
 *.pvd
 *.frd

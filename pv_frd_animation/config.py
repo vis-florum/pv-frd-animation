@@ -8,14 +8,14 @@ PROJECT_ROOT = Path(__file__).resolve().parent.parent
 
 
 def default_config(workflow):
-    local = PROJECT_ROOT / 'configs' / (workflow+'.local.json')
-    return local if local.is_file() else PROJECT_ROOT / 'configs' / (workflow+'.example.json')
+    local = PROJECT_ROOT / 'examples' / workflow / 'config.local.json'
+    return local if local.is_file() else PROJECT_ROOT / 'examples' / workflow / 'config.example.json'
 
 
 DEFAULTS = dict(
-    state=str(PROJECT_ROOT / 'states' / 'beam.pvsm'),
-    data=str(PROJECT_ROOT / 'data' / 'beam.vtu'),
-    output=str(PROJECT_ROOT / 'output' / 'beam'),
+    state=str(PROJECT_ROOT / 'examples' / 'beam' / 'states' / 'beam.pvsm'),
+    data=str(PROJECT_ROOT / 'examples' / 'beam' / 'data' / 'beam.vtu'),
+    output=str(PROJECT_ROOT / 'examples' / 'beam' / 'output'),
     amplitude=0.7,        # WarpByVector scale factor, NOT a target displacement.
     cycles=3,            # Each cycle: 0 -> +amplitude -> 0 -> -amplitude -> 0.
     speed=0.5,           # Beam cycles per second, independent of frame rate.
@@ -56,7 +56,7 @@ def arguments(argv=None):
         try:
             config = json.loads(selected.config.read_text())
             if not isinstance(config, dict) or set(config) - set(DEFAULTS):
-                raise ValueError('Config must use the keys in configs/beam.example.json')
+                raise ValueError('Config must use the keys in examples/beam/config.example.json')
             for key, value in config.items():
                 expected = DEFAULTS[key]
                 if key in ('orbit_axis', 'orbit2_axis'):

@@ -19,6 +19,6 @@ The application uses the Python standard library. FFmpeg regression tests run wh
 | `executables`, `worker` | Native tool discovery and process supervision |
 | `encoding` | Bounded frame input, MP4/GIF export |
 
-Public examples belong in `configs/*.example.json`. Working presets belong in ignored `configs/*.local.json`. Scientific inputs, `.pvsm` files, rendered frames, and output are local. A fresh clone requires its own inputs.
+Public examples belong in `examples/<name>/config.example.json`. Working presets belong in ignored `examples/<name>/config.local.json`. Scientific inputs, `.pvsm` files, rendered frames, and output are local. A fresh clone requires its own inputs.
 
 For rendering changes, check a short beam render and a two-mode sweep. Verify both exports with `ffprobe`/`ffmpeg`, reopen the generated state, and inspect the first/last zero poses, displacement peaks, annotation values, and camera. A mode sweep should leave camera and annotation settings identical to its input state.

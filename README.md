@@ -11,18 +11,17 @@ uv sync --locked
 uv run animate.py init
 ```
 
-Put your inputs in `data/` and save your ParaView states in `states/`. Edit the paths in `configs/beam.local.json` or `configs/modes.local.json`. Paths are relative to the config file.
+Edit `examples/beam/config.local.json` or `examples/modes/config.local.json`. Put inputs in that example’s `data/` and ParaView states in its `states/`. Paths are relative to the config file.
 
 ```text
-configs/     example presets + ignored local settings
-states/      your .pvsm files
-data/        your VTU files and PVD collections
-output/      generated frames, movies, states, logs
+examples/beam/       single-mode preset, local inputs and output
+examples/modes/      PVD sweep preset, local inputs and output
+examples/cinematic/  camera-motion preset; shares beam inputs
 pv_frd_animation/   rendering and orchestration
 tests/       regression tests
 ```
 
-Local inputs, state files, settings, and output stay outside Git. Keep a PVD beside the VTU files it references. Displacement vectors must be named `disp`; export FRD results to VTU/PVD first.
+Only `config.example.json` and documentation inside `examples/` are tracked. Local settings, inputs, states, frames, logs, and results stay outside Git. See [example layout](examples/README.md). Keep a PVD beside the VTU files it references. Displacement vectors must be named `disp`; export FRD results to VTU/PVD first.
 
 ## Run
 
@@ -31,7 +30,7 @@ Local inputs, state files, settings, and output stay outside Git. Keep a PVD bes
 ```sh
 uv run animate.py beam doctor
 uv run animate.py beam --workers 4
-uv run animate.py beam --config configs/cinematic.local.json --workers 4
+uv run animate.py beam --config examples/cinematic/config.local.json --workers 4
 ```
 
 **Mode sweep.** Hold each PVD time, complete one closed cycle, then advance. Preserve the state camera, annotations, colors, and visibility.
@@ -64,7 +63,7 @@ uv run animate.py modes render --workers 4
 uv run animate.py modes encode
 ```
 
-Beam output: `output/beam/beam_animation.{mp4,gif,pvsm}`. Sweep output: `output/modes/allmodes.{mp4,gif,pvsm}`. Both include `preview.png`, frames, settings, and logs. Select another `--output` to keep variants.
+Beam output: `examples/beam/output/beam_animation.{mp4,gif,pvsm}`. Sweep output: `examples/modes/output/allmodes.{mp4,gif,pvsm}`. Both include `preview.png`, frames, settings, and logs. Select another `--output` to keep variants.
 
 ## Reference
 

@@ -1,7 +1,7 @@
 {
-  "state": "../states/modes.pvsm",
-  "pvd": "../data/modes/series.pvd",
-  "output": "../output/modes",
+  "state": "./states/modes.pvsm",
+  "pvd": "./data/series.pvd",
+  "output": "./output",
   "start_time": 2.0,
   "end_time": 16.0,
   "seconds_per_cycle": 2.0,

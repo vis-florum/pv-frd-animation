@@ -1,7 +1,7 @@
 {
-  "state": "../states/beam.pvsm",
-  "data": "../data/beam.vtu",
-  "output": "../output/beam",
+  "state": "./states/beam.pvsm",
+  "data": "./data/beam.vtu",
+  "output": "./output",
   "amplitude": 0.7,
   "cycles": 3,
   "speed": 0.5,

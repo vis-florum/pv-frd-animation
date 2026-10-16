@@ -9,7 +9,7 @@ from .pipeline import main as run_pipeline
 def init_configs(argv):
     parser = argparse.ArgumentParser(prog='animate.py init',description='Create local configs without overwriting existing settings.')
     parser.parse_args(argv)
-    for example in sorted((PROJECT_ROOT/'configs').glob('*.example.json')):
+    for example in sorted((PROJECT_ROOT/'examples').glob('*/config.example.json')):
         local = example.with_name(example.name.replace('.example.json','.local.json'))
         try:
             with local.open('x') as target:

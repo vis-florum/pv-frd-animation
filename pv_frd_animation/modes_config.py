@@ -7,8 +7,8 @@ import xml.etree.ElementTree as ET
 
 from .config import PROJECT_ROOT,default_config
 
-DEFAULTS = dict(state=str(PROJECT_ROOT/'states'/'modes.pvsm'),pvd=None,
-                output=str(PROJECT_ROOT/'output'/'modes'),start_time=2.0,end_time=16.0,
+DEFAULTS = dict(state=str(PROJECT_ROOT/'examples'/'modes'/'states'/'modes.pvsm'),pvd=None,
+                output=str(PROJECT_ROOT/'examples'/'modes'/'output'),start_time=2.0,end_time=16.0,
                 seconds_per_cycle=2.0,amplitude=0.1,fps=24,width=1920,height=1080,
                 crf=14,preset='slow',gif_width=960,gif_fps=24,gif_colors=256,
                 workers=1,threads_per_worker=0,pvpython=None,ffmpeg='ffmpeg')
@@ -53,7 +53,7 @@ def arguments(argv=None):
     if selected.config.is_file():
         config = json.loads(selected.config.read_text())
         if not isinstance(config,dict) or set(config)-set(DEFAULTS):
-            pre.error('Mode config must use the keys in configs/modes.example.json')
+            pre.error('Mode config must use the keys in examples/modes/config.example.json')
         for key,value in config.items():
             expected = DEFAULTS[key]
             if key in ('pvd','pvpython'):
