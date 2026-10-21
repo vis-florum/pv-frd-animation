@@ -2,7 +2,7 @@
   "state": "./states/showcase.pvsm",
   "output": "./output",
   "seconds_per_orbit": 8.0,
-  "zoom": 0.9,
+  "zoom": 1.0,
   "fps": 24,
   "width": 1920,
   "height": 1080,
