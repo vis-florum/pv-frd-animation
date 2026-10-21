@@ -1,7 +1,7 @@
 # Reference
 
 ```sh
-uv run animate.py {beam,modes} [stage] [flags]
+uv run animate.py {beam,modes,turntable} [stage] [flags]
 ```
 
 Stages: `run` (default, render + encode), `preview`, `render`, `encode`, `doctor`.
@@ -15,8 +15,8 @@ CLI flags override the selected config. Config paths resolve relative to the con
 | Flag | Meaning | Default |
 |---|---|---|
 | `--config FILE` | Select a JSON preset | Local config, then example |
-| `--state FILE` | ParaView state | `examples/{beam,modes}/states/{beam,modes}.pvsm` |
-| `--output DIR` | Output directory | `examples/{beam,modes}/output` |
+| `--state FILE` | ParaView state | `examples/{beam,modes,turntable}/states/{beam,modes,turntable}.pvsm` |
+| `--output DIR` | Output directory | `examples/{beam,modes,turntable}/output` |
 | `--amplitude X` | Positive/negative warp scale | Beam: `0.7`; sweep: `0.1` |
 | `--fps N` | Frames per second | `24` |
 | `--width N`, `--height N` | PNG/MP4 dimensions; even values | `1920`, `1080` |
@@ -93,6 +93,27 @@ uv run animate.py modes --pvd /path/to/series.pvd --state /path/to/view.pvsm
 ```
 
 A same-named PVD beside the state is preferred when inferring paths. Paths within the PVD remain relative to that PVD. Keep its referenced VTU files together.
+
+## Saved-scene turntable
+
+```sh
+uv run animate.py turntable [stage] [flags]
+```
+
+Uses `examples/turntable/config.local.json`, then `config.example.json`. Common export and worker flags apply. `--data`, warp, and mode-sweep options do not apply: every reader is loaded from the state.
+
+| Flag | Meaning | Default |
+|---|---|---|
+| `--state FILE` | State containing exactly one RenderView | `examples/turntable/states/showcase.pvsm` |
+| `--output DIR` | Frames, MP4, GIF, preview, snapshot state, metadata | `examples/turntable/output` |
+| `--seconds-per-orbit SEC` | Duration of each full rotation | `8` |
+| `--zoom X` | Relative to selected framing; below 1 zooms out | `0.9` |
+| `--framing {fit,state}` | Fit every orbit angle, or keep saved focal point and framing | `fit` |
+| `--volume-renderer {state,cpu,gpu}` | Keep the saved mapper or select an alternative for headless rendering | `state` |
+
+Motion is sequential: 360° around world Y, return to the saved orientation, then 360° around world Z. By default, the visible bounds define the rotation center, and projected bounds sampled across both rotations keep the entire scene in frame while preserving the saved starting direction. `--framing state` retains the saved focal point and camera framing instead. Position and up vector rotate together; radius stays fixed. Each orbit has `round(seconds_per_orbit × fps)` intervals; the sequence includes one closing frame. Defaults give 385 frames. Camera motion does not change data time, profiles, visibility, transfer functions, or annotations. Framing and font scaling preserve the saved aspect ratio with letterboxing.
+
+MP4 defaults: 1920×1080, CRF 14, slow preset. GIF: 960×540, 24 fps, 256 colors. `turntable.pvsm` is a scene snapshot at the initial pose; rerun the pipeline to reproduce the camera tour. `doctor` checks the state's file-backed readers. Keep multiblock/PVD sidecar files beside their parent files. Use `--volume-renderer cpu` if a headless GPU rejects a large CT volume; this retains the saved color and opacity transfer functions.
 
 ## Execution
 

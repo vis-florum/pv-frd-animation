@@ -1,6 +1,6 @@
 # pv-frd-animation
 
-ParaView displacement animations. One VTU mode or a PVD mode sweep. MP4 and GIF. Run with `uv`.
+ParaView displacement animations. One VTU mode, a PVD mode sweep, or a camera tour of a saved scene. MP4 and GIF. Run with `uv`.
 
 ## Setup
 
@@ -17,6 +17,7 @@ Edit `examples/beam/config.local.json` or `examples/modes/config.local.json`. Pu
 examples/beam/       single-mode preset, local inputs and output
 examples/modes/      PVD sweep preset, local inputs and output
 examples/cinematic/  camera-motion preset; shares beam inputs
+examples/turntable/  saved-scene tour; sequential Y and Z rotations
 pv_frd_animation/   rendering and orchestration
 tests/       regression tests
 ```
@@ -42,6 +43,16 @@ uv run animate.py modes --seconds-per-cycle 2 --workers 4
 
 Sweep defaults: times **2–16**, warp **±0.1**, **2 seconds per mode**. MP4 **1920×1080**, GIF **960×540**. Letterboxing preserves the saved view's aspect ratio.
 
+**Saved scene.** Keep profiles, volume rendering, colormap, annotations, and the saved data time. Rotate 360° around world Y, then 360° around world Z, about the center of the visible object.
+
+```sh
+uv run animate.py turntable doctor
+uv run animate.py turntable preview
+uv run animate.py turntable --seconds-per-orbit 8 --zoom 0.9 --workers 2
+```
+
+Set `state` and `output` in `examples/turntable/config.local.json`. Defaults: 8 seconds per orbit, 24 fps, zoom 0.9, MP4 1920×1080, GIF 960×540, CRF 14. The camera keeps its saved starting direction and fits all rotation angles; zoom 0.9 adds a small margin. Use `--framing state` to keep the exact saved focal point and framing. The saved aspect ratio is preserved with letterboxing. One RenderView is supported; no displacement is animated. The referenced inputs must remain accessible. Use `--volume-renderer cpu` for CT volumes exceeding headless GPU texture limits. Changing the state propagates on the next render.
+
 ## Return to a project
 
 1. Save your changes in ParaView to the `.pvsm` named in the local config.
@@ -54,7 +65,7 @@ uv run animate.py modes preview
 uv run animate.py modes --workers 4
 ```
 
-`beam` and `modes` automatically use their `.local.json` when present; otherwise they use `.example.json`. CLI flags override config values. `init` never overwrites existing local settings.
+`beam`, `modes`, and `turntable` automatically use their `.local.json` when present; otherwise they use `.example.json`. CLI flags override config values. `init` never overwrites existing local settings.
 
 State changes require rendering again. Encoding alone reuses existing PNGs:
 

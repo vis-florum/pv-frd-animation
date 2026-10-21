@@ -8,6 +8,9 @@ from .timing import frame_count, frame_time, displacement
 
 
 def frame_plan(a):
+    if getattr(a,'animation_type','beam') == 'turntable':
+        from .turntable_timing import frame_plan as turntable_plan
+        return turntable_plan(a)
     if getattr(a,'animation_type','beam') == 'modes':
         from .modes_timing import frame_plan as mode_plan
         return mode_plan(a)

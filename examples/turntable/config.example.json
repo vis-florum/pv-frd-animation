@@ -1,0 +1,20 @@
+{
+  "state": "./states/showcase.pvsm",
+  "output": "./output",
+  "seconds_per_orbit": 8.0,
+  "zoom": 0.9,
+  "fps": 24,
+  "width": 1920,
+  "height": 1080,
+  "crf": 14,
+  "preset": "slow",
+  "gif_width": 960,
+  "gif_fps": 24,
+  "gif_colors": 256,
+  "workers": 1,
+  "threads_per_worker": 0,
+  "pvpython": null,
+  "ffmpeg": "ffmpeg",
+  "volume_renderer": "state",
+  "framing": "fit"
+}

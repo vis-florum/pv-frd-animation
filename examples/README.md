@@ -10,9 +10,10 @@ uv run animate.py init
 |---|---|---|
 | `beam/` | `uv run animate.py beam` | `states/beam.pvsm`, `data/beam.vtu` |
 | `modes/` | `uv run animate.py modes` | `states/modes.pvsm`, `data/series.pvd` and its VTUs |
+| `turntable/` | `uv run animate.py turntable` | `states/showcase.pvsm`; inputs referenced by the state |
 | `cinematic/` | `uv run animate.py beam --config examples/cinematic/config.local.json` | Shares `../beam/states/` and `../beam/data/` |
 
-Each directory contains a tracked `config.example.json`. Edit the ignored `config.local.json` created by `init`; it is never overwritten. `beam` and `modes` select their local preset automatically. Create `data/` and `states/` as needed, or point the config to inputs elsewhere. Keep PVD files with the VTUs they reference.
+Each directory contains a tracked `config.example.json`. Edit the ignored `config.local.json` created by `init`; it is never overwritten. `beam`, `modes`, and `turntable` select their local preset automatically. Create `data/` and `states/` as needed, or point the config to inputs elsewhere. Keep PVD files with the VTUs they reference.
 
 All config paths resolve relative to that JSON, including `output`. Each preset writes frames, previews, MP4, GIF, saved state, settings, and logs to its own `output/`. CLI path overrides resolve relative to your current working directory.
 

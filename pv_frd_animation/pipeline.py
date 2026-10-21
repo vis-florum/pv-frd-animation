@@ -17,7 +17,13 @@ def doctor(a):
         except RuntimeError as exc:
             print(label + ':', exc)
             good = False
-    for label, path in [('State', a.state), ('Data', a.data)]:
+    inputs = [('State', a.state)]
+    if getattr(a,'animation_type','beam') == 'turntable' and Path(a.state).is_file():
+        from .turntable_config import state_inputs
+        inputs.extend(('Reader', str(path)) for path in state_inputs(a.state))
+    elif getattr(a,'animation_type','beam') != 'turntable':
+        inputs.append(('Data', a.data))
+    for label, path in inputs:
         exists = bool(path) and Path(path).is_file()
         print(label + ':', path, '(OK)' if exists else '(MISSING)')
         good &= exists
@@ -46,7 +52,9 @@ def main(argv=None, parse=arguments):
                     a.pvpython = find_pvpython(a.pvpython)
                     launch_renderer(a)
                 else:
-                    if getattr(a,'animation_type','beam') == 'modes':
+                    if getattr(a,'animation_type','beam') == 'turntable':
+                        from .turntable_renderer import render
+                    elif getattr(a,'animation_type','beam') == 'modes':
                         from .modes_renderer import render
                     else:
                         from .renderer import render

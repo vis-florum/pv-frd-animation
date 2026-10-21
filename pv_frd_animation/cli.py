@@ -1,4 +1,4 @@
-"""Two workflows. One entry point."""
+"""State and displacement workflows. One entry point."""
 import argparse
 import sys
 from .config import PROJECT_ROOT
@@ -24,16 +24,18 @@ def main(argv=None):
     argv = list(sys.argv[1:] if argv is None else argv)
     parser = argparse.ArgumentParser(
         prog='animate.py',
-        description='ParaView displacement animations: single modes and PVD sweeps.',
+        description='ParaView animations: single modes, PVD sweeps, and saved-scene camera tours.',
         epilog='Examples: uv run animate.py beam doctor | uv run animate.py modes --seconds-per-cycle 2')
-    parser.add_argument('workflow',choices=['beam','modes','init'],help='beam: one VTU; modes: PVD sweep; init: create local configs')
+    parser.add_argument('workflow',choices=['beam','modes','turntable','init'],help='beam: one VTU; modes: PVD sweep; turntable: saved scene tour; init: create local configs')
     if not argv:
         parser.print_help()
         return 0
     selected = parser.parse_args(argv[:1])
     if selected.workflow == 'init':
         return init_configs(argv[1:])
-    if selected.workflow == 'modes':
+    if selected.workflow == 'turntable':
+        from .turntable_config import arguments
+    elif selected.workflow == 'modes':
         from .modes_config import arguments
     else:
         from .config import arguments

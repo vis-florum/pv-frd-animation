@@ -11,10 +11,10 @@ The application uses the Python standard library. FFmpeg regression tests run wh
 |---|---|
 | `cli` | Workflow selection and local config initialization |
 | `pipeline` | Stages, diagnostics, errors |
-| `config`, `modes_config` | Defaults, validation, portable paths |
-| `timing`, `modes_timing` | Sampling and mode sequencing |
+| `config`, `modes_config`, `turntable_config` | Defaults, validation, portable paths |
+| `timing`, `modes_timing`, `turntable_timing` | Sampling and mode sequencing |
 | `camera`, `geometry` | Camera paths and interior mesh target |
-| `renderer`, `modes_renderer` | ParaView scenes and captures |
+| `renderer`, `modes_renderer`, `turntable_renderer` | ParaView scenes and captures |
 | `frames` | Deduplication, worker assignments, ordered sequence |
 | `executables`, `worker` | Native tool discovery and process supervision |
 | `encoding` | Bounded frame input, MP4/GIF export |
